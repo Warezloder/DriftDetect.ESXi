@@ -1,0 +1,43 @@
+{
+  "Rules": [
+    { "EntityType": "System", "Property": "PowerState", "Severity": "Critical" },
+    { "EntityType": "System", "Property": "ConnectionState", "Severity": "Critical" },
+    { "EntityType": "System", "Property": "Version", "Severity": "High" },
+    { "EntityType": "System", "Property": "Build", "Severity": "Medium" },
+    { "EntityType": "System", "Property": "NtpServers", "Severity": "Medium" },
+    { "EntityType": "System", "Property": "DnsServers", "Severity": "Medium" },
+    { "EntityType": "System", "Property": "SyslogServers", "Severity": "Medium" },
+    { "EntityType": "System", "Property": "NtpServiceRunning", "Severity": "High" },
+    { "EntityType": "System", "Property": "LicenseKey", "Severity": "High" },
+    
+    { "EntityType": "Network", "Property": "IP", "Severity": "Critical" },
+    { "EntityType": "Network", "Property": "Mtu", "Severity": "High" },
+    { "EntityType": "Network", "Property": "VLanId", "Severity": "High" },
+    { "EntityType": "Network", "Property": "Nic", "Severity": "High" },
+    { "EntityType": "Network", "Property": "ManagementTrafficEnabled", "Severity": "Critical" },
+    { "EntityType": "Network", "Property": "VMotionEnabled", "Severity": "High" },
+    
+    { "EntityType": "Storage", "Property": "State", "Severity": "Critical" },
+    { "EntityType": "Storage", "Property": "Accessible", "Severity": "Critical" },
+    { "EntityType": "Storage", "Property": "MultipathPolicy", "Severity": "High" },
+    { "EntityType": "Storage", "Property": "TotalPaths", "Severity": "High" },
+    { "EntityType": "Storage", "Property": "ActivePaths", "Severity": "Critical" },
+    { "EntityType": "Storage", "Property": "DeadPaths", "Severity": "Critical" },
+    { "EntityType": "Storage", "Property": "Status", "Severity": "High" },
+    
+    { "EntityType": "Service", "Property": "Running", "Severity": "Medium" },
+    { "EntityType": "Service", "Property": "Policy", "Severity": "Medium" },
+    
+    { "EntityType": "AdvancedSetting", "Property": "Value", "Severity": "Medium" },
+    { "EntityType": "AdvancedSetting", "Property": "Security.AccountLockFailures", "Severity": "High" },
+    { "EntityType": "AdvancedSetting", "Property": "Security.PasswordQualityControl", "Severity": "High" },
+    { "EntityType": "AdvancedSetting", "Property": "UserVars.ESXiShellInteractiveTimeOut", "Severity": "Medium" },
+    { "EntityType": "AdvancedSetting", "Property": "Mem.ShareForceSalting", "Severity": "High" },
+    
+    { "EntityType": "Firewall", "Property": "Enabled", "Severity": "High" },
+    { "EntityType": "Firewall", "Property": "DefaultAction", "Severity": "Critical" },
+    
+    { "EntityType": "Account", "Property": "Role", "Severity": "High" },
+    { "EntityType": "Account", "Property": "Propagate", "Severity": "Medium" }
+  ]
+}
