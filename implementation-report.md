@@ -57,3 +57,7 @@ Root integration owns staging, combined module import-order testing, common HTML
 ## Final integration follow-up
 Root completed the reviewed comparison JSON depth fix and added a deep entity-addition persistence regression. The final staged ESXi package has 45 passing tests. Combined Core/adapter/integration verification passes 142 tests. See ../review-artifacts/implementation-review-resolutions.md for final evidence and limits.
 
+
+## 2026-10-30 Core compatibility follow-up
+Manifest and module-scoped imports now require Core >=1.0.0 and <2.0.0. Fresh-process tests verify compatible command dispatch with both majors installed, Core 2.x preloaded, both majors preloaded, and rejection when only 2.x is available. ESXi package: 49 passed. Full staged Core/adapter/integration suite: 165 passed, zero failed/skipped. Parser/manifests and git diff checks pass. This PR also carries the previously local shared-Core migration because ESXi origin/main did not yet contain it; the upstream README banner is preserved.
+

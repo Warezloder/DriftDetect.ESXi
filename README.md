@@ -6,6 +6,8 @@ Capture and compare ESXi 8 configuration using PowerShell 7+ and DriftDetect.Cor
 
 Install Core alongside the module in a directory on `PSModulePath`. For workspace development, use the parent staging/test script or prepend the workspace parent to the **current process** module path. The shipping module has no sibling fallback or global installation behavior.
 
+Both the manifest and module-scoped import require Core >=1.0.0 and <2.0.0. This selects compatible commands even when Core 2.x is already loaded; having only Core 2.x installed fails import. Fresh-process regression tests cover installed and preloaded major versions.
+
 ```powershell
 Import-Module DriftDetect.ESXi
 $connection = Connect-VIServer -Server 'esxi01.example.test' -Credential (Get-Credential)

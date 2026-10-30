@@ -7,7 +7,7 @@
     Copyright = '(c) 2025 Warezloder. All rights reserved.'
     Description = 'ESXi configuration capture with explicit coverage, shared comparison rules, JSON and HTML reports.'
     PowerShellVersion = '7.0'
-    RequiredModules = @(@{ ModuleName = 'DriftDetect.Core'; ModuleVersion = '1.0.0' })
+    RequiredModules = @(@{ ModuleName = 'DriftDetect.Core'; ModuleVersion = '1.0.0'; MaximumVersion = '1.*' })
     FunctionsToExport = @('New-ESXiSnapshot','Get-ESXiSnapshot','Compare-ESXiSnapshot','Export-ESXiDriftReport','Export-ESXiConfigurationReport')
     CmdletsToExport = @()
     VariablesToExport = @()
