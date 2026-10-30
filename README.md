@@ -1,3 +1,5 @@
+<img width="2560" height="1280" alt="esxi-banner-01" src="https://github.com/user-attachments/assets/3f3e3243-9b10-4042-8218-bd615a3c4729" />
+
 # DriftDetect.ESXi 2.0
 
 Capture and compare ESXi 8 configuration using PowerShell 7+ and DriftDetect.Core 1.x. Importing JSON and comparing snapshots need neither PowerCLI nor PSWriteHTML. Capture uses VMware.PowerCLI 12+ or VCF.PowerCLI; HTML exports load PSWriteHTML 0.0.170+ on demand through Core.
