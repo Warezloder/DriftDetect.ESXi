@@ -1,43 +1,279 @@
 {
-  "Rules": [
-    { "EntityType": "System", "Property": "PowerState", "Severity": "Critical" },
-    { "EntityType": "System", "Property": "ConnectionState", "Severity": "Critical" },
-    { "EntityType": "System", "Property": "Version", "Severity": "High" },
-    { "EntityType": "System", "Property": "Build", "Severity": "Medium" },
-    { "EntityType": "System", "Property": "NtpServers", "Severity": "Medium" },
-    { "EntityType": "System", "Property": "DnsServers", "Severity": "Medium" },
-    { "EntityType": "System", "Property": "SyslogServers", "Severity": "Medium" },
-    { "EntityType": "System", "Property": "NtpServiceRunning", "Severity": "High" },
-    { "EntityType": "System", "Property": "LicenseKey", "Severity": "High" },
-    
-    { "EntityType": "Network", "Property": "IP", "Severity": "Critical" },
-    { "EntityType": "Network", "Property": "Mtu", "Severity": "High" },
-    { "EntityType": "Network", "Property": "VLanId", "Severity": "High" },
-    { "EntityType": "Network", "Property": "Nic", "Severity": "High" },
-    { "EntityType": "Network", "Property": "ManagementTrafficEnabled", "Severity": "Critical" },
-    { "EntityType": "Network", "Property": "VMotionEnabled", "Severity": "High" },
-    
-    { "EntityType": "Storage", "Property": "State", "Severity": "Critical" },
-    { "EntityType": "Storage", "Property": "Accessible", "Severity": "Critical" },
-    { "EntityType": "Storage", "Property": "MultipathPolicy", "Severity": "High" },
-    { "EntityType": "Storage", "Property": "TotalPaths", "Severity": "High" },
-    { "EntityType": "Storage", "Property": "ActivePaths", "Severity": "Critical" },
-    { "EntityType": "Storage", "Property": "DeadPaths", "Severity": "Critical" },
-    { "EntityType": "Storage", "Property": "Status", "Severity": "High" },
-    
-    { "EntityType": "Service", "Property": "Running", "Severity": "Medium" },
-    { "EntityType": "Service", "Property": "Policy", "Severity": "Medium" },
-    
-    { "EntityType": "AdvancedSetting", "Property": "Value", "Severity": "Medium" },
-    { "EntityType": "AdvancedSetting", "Property": "Security.AccountLockFailures", "Severity": "High" },
-    { "EntityType": "AdvancedSetting", "Property": "Security.PasswordQualityControl", "Severity": "High" },
-    { "EntityType": "AdvancedSetting", "Property": "UserVars.ESXiShellInteractiveTimeOut", "Severity": "Medium" },
-    { "EntityType": "AdvancedSetting", "Property": "Mem.ShareForceSalting", "Severity": "High" },
-    
-    { "EntityType": "Firewall", "Property": "Enabled", "Severity": "High" },
-    { "EntityType": "Firewall", "Property": "DefaultAction", "Severity": "Critical" },
-    
-    { "EntityType": "Account", "Property": "Role", "Severity": "High" },
-    { "EntityType": "Account", "Property": "Propagate", "Severity": "Medium" }
-  ]
+  "SchemaVersion": "1.0",
+  "SeverityRules": [
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "System",
+      "Id": "System-Version",
+      "PropertyPath": "/Version"
+    },
+    {
+      "Severity": "Medium",
+      "Technology": "ESXi",
+      "EntityType": "System",
+      "Id": "System-Build",
+      "PropertyPath": "/Build"
+    },
+    {
+      "Severity": "Medium",
+      "Technology": "ESXi",
+      "EntityType": "System",
+      "Id": "System-NtpServers",
+      "PropertyPath": "/NtpServers"
+    },
+    {
+      "Severity": "Medium",
+      "Technology": "ESXi",
+      "EntityType": "System",
+      "Id": "System-DnsServers",
+      "PropertyPath": "/DnsServers"
+    },
+    {
+      "Severity": "Medium",
+      "Technology": "ESXi",
+      "EntityType": "System",
+      "Id": "System-SyslogServers",
+      "PropertyPath": "/SyslogServers"
+    },
+    {
+      "Severity": "Critical",
+      "Technology": "ESXi",
+      "EntityType": "Network",
+      "Id": "Network-IP",
+      "PropertyPath": "/IP"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Network",
+      "Id": "Network-Mtu",
+      "PropertyPath": "/Mtu"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Network",
+      "Id": "Network-VLanId",
+      "PropertyPath": "/VLanId"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Network",
+      "Id": "Network-Nic",
+      "PropertyPath": "/Nic"
+    },
+    {
+      "Severity": "Critical",
+      "Technology": "ESXi",
+      "EntityType": "Network",
+      "Id": "Network-ManagementTrafficEnabled",
+      "PropertyPath": "/ManagementTrafficEnabled"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Network",
+      "Id": "Network-VMotionEnabled",
+      "PropertyPath": "/VMotionEnabled"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Storage",
+      "Id": "Storage-MultipathPolicy",
+      "PropertyPath": "/MultipathPolicy"
+    },
+    {
+      "Severity": "Medium",
+      "Technology": "ESXi",
+      "EntityType": "Service",
+      "Id": "Service-Policy",
+      "PropertyPath": "/Policy"
+    },
+    {
+      "Severity": "Medium",
+      "Technology": "ESXi",
+      "EntityType": "AdvancedSetting",
+      "Id": "AdvancedSetting-Value",
+      "PropertyPath": "/Value"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "Firewall-Enabled",
+      "PropertyPath": "/Enabled"
+    },
+    {
+      "Severity": "Critical",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "Firewall-IncomingBlocked",
+      "PropertyPath": "/IncomingBlocked"
+    },
+    {
+      "Severity": "Critical",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "Firewall-OutgoingBlocked",
+      "PropertyPath": "/OutgoingBlocked"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Account",
+      "Id": "Account-Role",
+      "PropertyPath": "/Role"
+    },
+    {
+      "Severity": "Medium",
+      "Technology": "ESXi",
+      "EntityType": "Account",
+      "Id": "Account-Propagate",
+      "PropertyPath": "/Propagate"
+    },
+    {
+      "EntityType": "AdvancedSetting",
+      "Technology": "ESXi",
+      "Id": "Advanced-Security.PasswordQualityControl",
+      "EntityName": "Security.PasswordQualityControl",
+      "Priority": 10,
+      "PropertyPath": "/Value",
+      "Severity": "High"
+    },
+    {
+      "EntityType": "AdvancedSetting",
+      "Technology": "ESXi",
+      "Id": "Advanced-Security.AccountLockFailures",
+      "EntityName": "Security.AccountLockFailures",
+      "Priority": 10,
+      "PropertyPath": "/Value",
+      "Severity": "High"
+    },
+    {
+      "EntityType": "AdvancedSetting",
+      "Technology": "ESXi",
+      "Id": "Advanced-Security.AccountUnlockTime",
+      "EntityName": "Security.AccountUnlockTime",
+      "Priority": 10,
+      "PropertyPath": "/Value",
+      "Severity": "High"
+    },
+    {
+      "EntityType": "AdvancedSetting",
+      "Technology": "ESXi",
+      "Id": "Advanced-Mem.ShareForceSalting",
+      "EntityName": "Mem.ShareForceSalting",
+      "Priority": 10,
+      "PropertyPath": "/Value",
+      "Severity": "High"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "Firewall-EntityAdded",
+      "ChangeType": "EntityAdded",
+      "PropertyPath": ""
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "Firewall-EntityRemoved",
+      "ChangeType": "EntityRemoved",
+      "PropertyPath": ""
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Account",
+      "Id": "Account-EntityAdded",
+      "ChangeType": "EntityAdded",
+      "PropertyPath": ""
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Account",
+      "Id": "Account-EntityRemoved",
+      "ChangeType": "EntityRemoved",
+      "PropertyPath": ""
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "Firewall-Allowed-AllIp",
+      "PropertyPath": "/AllowedHosts/AllIp"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "Firewall-Allowed-IpAddress",
+      "PropertyPath": "/AllowedHosts/IpAddress"
+    },
+    {
+      "Severity": "High",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "Firewall-Allowed-IpNetwork",
+      "PropertyPath": "/AllowedHosts/IpNetwork"
+    }
+  ],
+  "ComparisonPolicies": [
+    {
+      "Mode": "Ordered",
+      "Technology": "ESXi",
+      "EntityType": "System",
+      "Id": "DnsOrder",
+      "PropertyPath": "/DnsServers"
+    },
+    {
+      "Mode": "Set",
+      "Technology": "ESXi",
+      "EntityType": "Network",
+      "Id": "UplinkSet",
+      "PropertyPath": "/Nic"
+    },
+    {
+      "Mode": "Set",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "AllowedIpSet",
+      "PropertyPath": "/AllowedHosts/IpAddress"
+    },
+    {
+      "Mode": "Set",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "AllowedNetworkSet",
+      "PropertyPath": "/AllowedHosts/IpNetwork"
+    },
+    {
+      "Mode": "Set",
+      "Technology": "ESXi",
+      "EntityType": "Firewall",
+      "Id": "FirewallRulesSet",
+      "PropertyPath": "/Rules"
+    },
+    {
+      "Mode": "Set",
+      "Technology": "ESXi",
+      "EntityType": "System",
+      "Id": "NtpSet",
+      "PropertyPath": "/NtpServers"
+    },
+    {
+      "Mode": "Set",
+      "Technology": "ESXi",
+      "EntityType": "System",
+      "Id": "SyslogSet",
+      "PropertyPath": "/SyslogServers"
+    }
+  ],
+  "RuleSetVersion": "2.0"
 }
