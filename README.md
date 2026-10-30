@@ -1,3 +1,5 @@
+<img width="2560" height="1280" alt="esxi-banner-01" src="https://github.com/user-attachments/assets/3f3e3243-9b10-4042-8218-bd615a3c4729" />
+
 # DriftDetect.ESXi v1.0
 
 **Configuration drift detection for standalone ESXi 8.0+ hosts**
