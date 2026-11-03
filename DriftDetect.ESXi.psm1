@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 $ErrorActionPreference = 'Stop'
 # Bind compatible exports locally even if another Core major owns global commands.
-$core = Import-Module DriftDetect.Core -MinimumVersion 1.0.0 -MaximumVersion '1.*' -Scope Local -PassThru -ErrorAction Stop
+$core = Import-Module DriftDetect.Core -MinimumVersion 1.0.1 -MaximumVersion '1.*' -Scope Local -PassThru -ErrorAction Stop
 if (-not $core -or $core.Name -ne 'DriftDetect.Core' -or $core.Version.Major -ne 1) { throw 'DriftDetect.ESXi 2.x requires DriftDetect.Core 1.x.' }
 $script:ModuleRoot = $PSScriptRoot
 foreach ($folder in @('Private','Collectors','Public')) {

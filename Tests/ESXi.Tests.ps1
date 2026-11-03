@@ -16,7 +16,7 @@ Describe 'ESXi offline interface' {
     }
     It 'loads only Core as a required dependency' {
         $manifest = Import-PowerShellDataFile (Join-Path $PSScriptRoot '..\DriftDetect.ESXi.psd1')
-        $manifest.ModuleVersion | Should -Be '2.0.0'
+        $manifest.ModuleVersion | Should -Be '2.0.1'
         @($manifest.RequiredModules).Count | Should -Be 1
         $manifest.RequiredModules[0].ModuleName | Should -Be 'DriftDetect.Core'
         (Get-Command New-ESXiSnapshot).Parameters.Keys | Should -Contain 'IncludeAll'
@@ -152,6 +152,39 @@ Describe 'ESXi scoped collection' {
             $rule.Properties.AllowedHosts.AllIp | Should -BeFalse
             $rule.Properties.AllowedHosts.IpAddress | Should -Contain '10.0.0.10'
             $rule.Properties.AllowedHosts.IpNetwork[0].PrefixLength | Should -Be 16
+        }
+        It 'reports SSH activation and deactivation as High drift after persistence' {
+            Mock Get-VMHostService { [pscustomobject]@{Key='TSM-SSH';Label='Localized SSH label';Policy='off';Required=$false;Running=$false} }
+            $a=New-ESXiSnapshot -VMHost $hostFixture -Server $owner
+            Mock Get-VMHostService { [pscustomobject]@{Key='TSM-SSH';Label='Localized SSH label';Policy='off';Required=$false;Running=$true} }
+            $b=New-ESXiSnapshot -VMHost $hostFixture -Server $owner
+            $path=Join-Path $TestDrive ssh.json
+            $null=Export-DDSnapshot $b $path
+            $b=Import-DDSnapshot $path
+            $r=Compare-ESXiSnapshot -BaselineSnapshot $a -CurrentSnapshot $b
+            $r.TotalChanges | Should -Be 1
+            $r.Events[0].EntityId | Should -Be 'TSM-SSH'
+            $r.Events[0].PropertyPath | Should -Be '/Running'
+            $r.Events[0].OldValue | Should -BeFalse
+            $r.Events[0].NewValue | Should -BeTrue
+            $r.Events[0].Severity | Should -Be High
+            (Compare-ESXiSnapshot -BaselineSnapshot $b -CurrentSnapshot $a).Events[0].NewValue | Should -BeFalse
+            (Compare-ESXiSnapshot -BaselineSnapshot $b -CurrentSnapshot $b).TotalChanges | Should -Be 0
+        }
+        It 'fails SSH coverage when its running state is not a boolean' -ForEach @(@{State=$null},@{State='false'}) {
+            Mock Get-VMHostService { [pscustomobject]@{Key='TSM-SSH';Label='SSH';Policy='off';Required=$false;Running=$State} }
+            $snap=New-ESXiSnapshot -VMHost $hostFixture -Server $owner -WarningAction SilentlyContinue
+            ($snap.Collections | Where-Object Id -eq Services).Status | Should -Be Failed
+        }
+        It 'rejects old service scope and excludes it in partial comparisons' {
+            $a=New-ESXiSnapshot -VMHost $hostFixture -Server $owner
+            $unit=$a.Collections | Where-Object Id -eq Services
+            $unit.Scope=@{}; $unit.ScopeFingerprint=Get-DDHash $unit.Scope
+            $b=New-ESXiSnapshot -VMHost $hostFixture -Server $owner
+            {Compare-ESXiSnapshot -BaselineSnapshot $a -CurrentSnapshot $b} | Should -Throw '*scope*'
+            $r=Compare-ESXiSnapshot -BaselineSnapshot $a -CurrentSnapshot $b -AllowPartial
+            $r.IsComplete | Should -BeFalse
+            ($r.Coverage | Where-Object CollectionId -eq Services).Compared | Should -BeFalse
         }
         It 'separates operational observations and stable datastore identities' {
             Mock Get-Datastore { [pscustomobject]@{Name='Renamable';ExtensionData=[pscustomobject]@{Info=[pscustomobject]@{Url='/vmfs/volumes/uuid-volume'}};CapacityGB=100;FreeSpaceGB=40;State='Available';Type='VMFS';FileSystemVersion='6'} }

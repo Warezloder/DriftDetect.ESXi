@@ -41,6 +41,7 @@ function New-ESXiSnapshot {
     $collections = [System.Collections.Generic.List[object]]::new()
     foreach ($definition in @(Get-ESXiUnitDefinitions)) {
         $scope = [ordered]@{}
+        if ($definition.Id -eq 'Services') { $scope.ComparedRuntimeServices = @('TSM-SSH') }
         if ($definition.Id -eq 'AdvancedSettings') { $scope.Patterns = $patterns }
         if ($definition.Id -eq 'Accounts.Users') { $scope.ConnectionType = [string](Get-ESXiField $owningServer ProductLine) }
         if ($definition.Optional -and -not $enabled[$definition.Optional]) {
@@ -70,7 +71,7 @@ function New-ESXiSnapshot {
     $target = @{Id=$parsedUuid.ToString();Name=[string]$VMHost.Name;IdentitySource='HardwareUuid';Version=[string]$VMHost.Version;Build=[string]$VMHost.Build}
     $profile = @{IncludeAdvancedSettings=[bool]$enabled.AdvancedSettings;IncludeAccounts=[bool]$enabled.Accounts;IncludeFirewall=[bool]$enabled.Firewall;AdvancedSettingNames=$patterns;ExcludedFields=@('System.LicenseKey')}
     $rules = Import-DDRuleSet -Path (Join-Path $script:ModuleRoot 'Config\SeverityRules.json')
-    $snapshot = New-DDSnapshot -Technology ESXi -Target $target -Collections $collections.ToArray() -CollectionProfile $profile -RuleSet $rules -ProviderVersion '2.0.0'
+    $snapshot = New-DDSnapshot -Technology ESXi -Target $target -Collections $collections.ToArray() -CollectionProfile $profile -RuleSet $rules -ProviderVersion '2.0.1'
     if ($OutputPath) { Export-DDSnapshot -Snapshot $snapshot -Path $OutputPath | Out-Null }
     return $snapshot
 }
