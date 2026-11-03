@@ -109,7 +109,16 @@ function Invoke-ESXiUnit {
         'Services' {
             foreach ($item in @(Get-VMHostService -VMHost $VMHost -Server $Server -ErrorAction Stop)) {
                 $id = Get-ESXiStableId $item @('Key')
-                New-ESXiEntity $Unit Service $id $item.Label (Get-ESXiProjection $item @('Key','Label','Policy','Required') @('Policy')) (Get-ESXiProjection $item @('Running'))
+                $props = Get-ESXiProjection $item @('Key','Label','Policy','Required') @('Policy')
+                $observations = Get-ESXiProjection $item @('Running')
+                if ($id -ceq 'TSM-SSH') {
+                    # Active remote shell access is compared even if startup policy is off.
+                    $running = Get-ESXiField $item Running
+                    if ($running -isnot [bool]) { throw 'SSH running state unavailable.' }
+                    $props.Running = $running
+                    $observations = @{}
+                }
+                New-ESXiEntity $Unit Service $id $item.Label $props $observations
             }
         }
         'AdvancedSettings' {

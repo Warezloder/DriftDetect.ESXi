@@ -1,12 +1,12 @@
 <img width="2560" height="1280" alt="esxi-banner-01" src="https://github.com/user-attachments/assets/3f3e3243-9b10-4042-8218-bd615a3c4729" />
 
-# DriftDetect.ESXi 2.0
+# DriftDetect.ESXi 2.0.1
 
 Capture and compare ESXi 8 configuration using PowerShell 7+ and DriftDetect.Core 1.x. Importing JSON and comparing snapshots need neither PowerCLI nor PSWriteHTML. Capture uses VMware.PowerCLI 12+ or VCF.PowerCLI; HTML exports load PSWriteHTML 0.0.170+ on demand through Core.
 
 Install Core alongside the module in a directory on `PSModulePath`. For workspace development, use the parent staging/test script or prepend the workspace parent to the **current process** module path. The shipping module has no sibling fallback or global installation behavior.
 
-Both the manifest and module-scoped import require Core >=1.0.0 and <2.0.0. This selects compatible commands even when Core 2.x is already loaded; having only Core 2.x installed fails import. Fresh-process regression tests cover installed and preloaded major versions.
+Both the manifest and module-scoped import require Core >=1.0.1 and <2.0.0. This selects compatible commands even when Core 2.x is already loaded; having only Core 2.x installed fails import. Fresh-process regression tests cover installed and preloaded major versions.
 
 ```powershell
 Import-Module DriftDetect.ESXi
@@ -42,7 +42,9 @@ The original switches `-IncludeAdvancedSettings`, `-IncludeAccounts` and `-Inclu
 
 These 19 independent units always appear in coverage, including Skipped units. Successful empty queries are distinct from failed/unavailable queries. Each unit uses only its own relevant selection in Scope. No distributed-switch collector or exhaustive platform configuration coverage is claimed.
 
-Operational service running state, switch port availability, physical link state, datastore free space/health, HBA status and storage path state are retained in `Observations`, excluded from configuration drift. Known enums and IP/MAC addresses are normalized. DNS order is significant. Uplinks, NTP/syslog destinations and firewall rule/allowed-address lists use explicit set comparison policies.
+SSH (`TSM-SSH`) running state is compared as `Properties.Running`: starting or stopping SSH produces High drift even when startup `Policy` stays unchanged. An unavailable or non-boolean SSH state fails service collection. Other services' running state, switch port availability, physical link state, datastore free space/health, HBA status and storage path state remain in `Observations`, excluded from configuration drift. Known enums and IP/MAC addresses are normalized. DNS order is significant. Uplinks, NTP/syslog destinations and firewall rule/allowed-address lists use explicit set comparison policies.
+
+Version 2.0.1 requires Core 1.0.1 and expands service scope with `ComparedRuntimeServices = ['TSM-SSH']`, plus an SSH severity rule selected by stable service ID. **Capture a fresh ESXi baseline after upgrading.** Old snapshots remain readable, but their rules and service scope differ. An explicit rule override together with `-AllowPartial` can compare other compatible units; SSH coverage remains excluded and the result incomplete. Do not relabel old scope or move old observations into configuration to bypass compatibility checks.
 
 Advanced settings retain the version 1 important patterns. Use `-AdvancedSettingName 'Security.*','UserVars.*'` with `-IncludeAdvancedSettings` for custom selection, or `'*'` for all settings after reviewing what that wider selection exposes. Effective patterns are embedded in the snapshot and comparison scope. `-IncludeAll` enables this collector with its default important patterns; it does not silently broaden its setting selection. Password-quality, account lock and memory salting severity rules select **entity name plus `/Value`**, with priority over the general Medium Value rule. Firewall/account additions and removals are High.
 

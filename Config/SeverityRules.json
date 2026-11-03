@@ -2,6 +2,14 @@
   "SchemaVersion": "1.0",
   "SeverityRules": [
     {
+      "Id": "Service-SSH-Running",
+      "Technology": "ESXi",
+      "EntityType": "Service",
+      "EntityId": "TSM-SSH",
+      "PropertyPath": "/Running",
+      "Severity": "High"
+    },
+    {
       "Severity": "High",
       "Technology": "ESXi",
       "EntityType": "System",
@@ -275,5 +283,5 @@
       "PropertyPath": "/SyslogServers"
     }
   ],
-  "RuleSetVersion": "2.0"
+  "RuleSetVersion": "2.0.1"
 }
